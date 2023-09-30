@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" indexapi """
 from flask import Blueprint, jsonify
 from models import storage
 
