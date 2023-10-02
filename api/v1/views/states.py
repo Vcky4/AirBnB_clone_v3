@@ -2,10 +2,11 @@
 """states.py for airbnb"""
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, request, Flask
 from models import storage
 from models.state import State
 
+app = Flask(__name__)
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
@@ -64,3 +65,7 @@ def put_state(state_id):
             setattr(state, attr, val)
     state.save()
     return jsonify(state.to_dict())
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
