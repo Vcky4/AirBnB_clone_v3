@@ -3,7 +3,6 @@
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
-import os
 from os import environ
 
 app = Flask(__name__)
@@ -16,6 +15,7 @@ def teardown(error):
     storage.close()
 
 if __name__ == "__main__":
+    """main function """
     host = environ.get("HBNB_API_HOST", "0.0.0.0")
     port = environ.get('HBNB_API_PORT')
     if not host:
