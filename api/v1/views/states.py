@@ -3,10 +3,8 @@
 from models.state import State
 from models import storage
 from flask import abort, jsonify, make_response, request, Flask
-from flasgger import Swagger
 
 app = Flask(__name__)
-Swagger(app)
 
 
 @app.route('/api/v1/states', methods=['GET'], strict_slashes=False)
