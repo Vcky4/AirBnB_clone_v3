@@ -6,10 +6,8 @@ from flask import abort, jsonify, make_response, request, Flask
 from flasgger.utils import swag_from
 from api.v1.views import app_views
 
-app = Flask(__name__)
 
-
-@app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
     """
@@ -20,7 +18,7 @@ def get_states():
     return jsonify(list_states)
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_id_state.yml', methods=['GET'])
 def get_state(state_id):
     """ Retrieves a specific State """
@@ -31,7 +29,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/api/v1/states/<state_id>',
+@app_views.route('/states/<state_id>',
            methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
@@ -50,7 +48,7 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def post_state():
     """
@@ -68,7 +66,7 @@ def post_state():
     return make_response(jsonify(instance.to_dict()), 201)
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 @swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
@@ -90,7 +88,3 @@ def put_state(state_id):
             setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
-
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
