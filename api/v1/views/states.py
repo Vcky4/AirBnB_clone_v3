@@ -8,6 +8,7 @@ from flasgger import Swagger
 app = Flask(__name__)
 Swagger(app)
 
+
 @app.route('/api/v1/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """
@@ -16,6 +17,7 @@ def get_states():
     all_states = storage.all(State).values()
     list_states = [state.to_dict() for state in all_states]
     return jsonify(list_states)
+
 
 @app.route('/api/v1/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
@@ -26,7 +28,9 @@ def get_state(state_id):
 
     return jsonify(state.to_dict())
 
-@app.route('/api/v1/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app.route('/api/v1/states/<state_id>',
+           methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """
     Deletes a State Object
@@ -41,6 +45,7 @@ def delete_state(state_id):
     storage.save()
 
     return make_response(jsonify({}), 200)
+
 
 @app.route('/api/v1/states', methods=['POST'], strict_slashes=False)
 def post_state():
@@ -57,6 +62,7 @@ def post_state():
     instance = State(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
+
 
 @app.route('/api/v1/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
@@ -79,6 +85,7 @@ def put_state(state_id):
             setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
