@@ -3,11 +3,13 @@
 from models.state import State
 from models import storage
 from flask import abort, jsonify, make_response, request, Flask
+from flasgger.utils import swag_from
 
 app = Flask(__name__)
 
 
 @app.route('/api/v1/states', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
     """
     Retrieves the list of all State objects
@@ -18,6 +20,7 @@ def get_states():
 
 
 @app.route('/api/v1/states/<state_id>', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/state/get_id_state.yml', methods=['GET'])
 def get_state(state_id):
     """ Retrieves a specific State """
     state = storage.get(State, state_id)
@@ -29,6 +32,7 @@ def get_state(state_id):
 
 @app.route('/api/v1/states/<state_id>',
            methods=['DELETE'], strict_slashes=False)
+@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Deletes a State Object
@@ -46,6 +50,7 @@ def delete_state(state_id):
 
 
 @app.route('/api/v1/states', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/state/post_state.yml', methods=['POST'])
 def post_state():
     """
     Creates a State
@@ -63,6 +68,7 @@ def post_state():
 
 
 @app.route('/api/v1/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
     Updates a State
